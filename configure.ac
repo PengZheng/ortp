@@ -193,6 +193,10 @@ AC_CHECK_FUNCS(seteuid)
 dnl Check if we have arc4random family routines available
 AC_CHECK_FUNCS(arc4random)
 
+dnl Check if we have clock_nanosleep
+AC_CHECK_FUNCS(clock_nanosleep, [],
+	AC_CHECK_LIB(rt, clock_nanosleep, [AC_DEFINE(HAVE_CLOCK_NANOSLEEP)])
+)
 
 dnl check if we can use the pthread_library
 AC_CHECK_LIB(pthread, pthread_mutex_init, [pthread_enabled=yes], [pthread_enabled=no])
@@ -219,7 +223,6 @@ if test "$rt_enabled" = "yes" ; then
 	RT_LIBS="-lrt"
 	AC_SUBST(RT_LIBS)
 fi
-
 
 if test $debug_enabled = "yes"; then
 	ORTP_DEFS="$ORTP_DEFS -DORTP_DEBUG_MODE"

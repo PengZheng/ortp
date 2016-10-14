@@ -780,7 +780,7 @@ void ortp_sleep_ms(int ms){
 }
 
 void ortp_sleep_until(const ortpTimeSpec *ts){
-#ifdef __linux
+#if defined(__linux) && defined(HAVE_CLOCK_NANOSLEEP)
 	struct timespec rq;
 	rq.tv_sec=ts->tv_sec;
 	rq.tv_nsec=ts->tv_nsec;
